@@ -1,34 +1,49 @@
 package EVA3_1_ordenamientos;
 
+import java.util.Arrays;
+
 public class main {
     public static void main(String[] args) {
-        int[] original, selection;
-        
-        original = new int [10];
+        int[] original = new int[10];
         llenar(original);
-        System.out.println("");
+
+        System.out.println("Original:");
         imprimir(original);
         System.out.println("");
+
+        int[] a = Arrays.copyOf(original, original.length);
         long ini = System.nanoTime();
-        selectionSort(original);
-        long fin = System.nanoTime();
-        long tiempo = fin-ini;
-        imprimir(original);
-        System.out.println(tiempo);
-        System.out.println("");
-        long ini1 = System.nanoTime();
-        insertionSort(original);
-        long fin1 = System.nanoTime();
-        long tiempo1 = fin1-ini1;
-        System.out.println(tiempo1);
-        System.out.println("");
-        long ini2 = System.nanoTime();
-        bubbleSort(original);
-        long fin2 = System.nanoTime();
-        long tiempo2 = fin2-ini2;
-        imprimir(original);
-        System.out.println(tiempo2);
+        selectionSort(a);
+        long tiempo = System.nanoTime() - ini;
+        System.out.println("Selection:");
+        imprimir(a);
+        System.out.println(tiempo + " ns\n");
+
+        int[] b = Arrays.copyOf(original, original.length);
+        ini = System.nanoTime();
+        insertionSort(b);
+        tiempo = System.nanoTime() - ini;
+        System.out.println("Insertion:");
+        imprimir(b);
+        System.out.println(tiempo + " ns\n");
+
+        int[] c = Arrays.copyOf(original, original.length);
+        ini = System.nanoTime();
+        bubbleSort(c);
+        tiempo = System.nanoTime() - ini;
+        System.out.println("Bubble:");
+        imprimir(c);
+        System.out.println(tiempo + " ns\n");
+
+        int[] d = Arrays.copyOf(original, original.length);
+        ini = System.nanoTime();
+        quickSort(d, 0, d.length - 1);
+        tiempo = System.nanoTime() - ini;
+        System.out.println("Quick:");
+        imprimir(d);
+        System.out.println(tiempo + " ns");
     }
+
     public static void llenar(int arreglo[]){
         for (int i = 0; i<arreglo.length; i++) {
             arreglo[i] = (int)(Math.random()*100);
@@ -60,6 +75,7 @@ public class main {
         }
     }
     }
+
 public static void insertionSort(int[] arreglo) {
     for (int i = 1; i < arreglo.length; i++) {
         int actual = arreglo[i];
@@ -87,7 +103,41 @@ public static void insertionSort(int[] arreglo) {
             }
             
         }
+    }
+    public static int partition(int[] arreglo, int low, int high) {
+    int temp = arreglo[low];
+    arreglo[low] = arreglo[high];
+    arreglo[high] = temp;
 
+    int pivot = arreglo[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arreglo[j] <= pivot) {
+            i++;
+            temp = arreglo[i];
+            arreglo[i] = arreglo[j];
+            arreglo[j] = temp;
+        }
+    }
+
+    temp = arreglo[i + 1];
+    arreglo[i + 1] = arreglo[high];
+    arreglo[high] = temp;
+
+    return i + 1;
+}
+    public static void quickSort(int[] arreglo, int low, int high) {
+        
+        if (low < high) {
+            int pivotIndex = partition(arreglo, low, high);
+            quickSort(arreglo, low, pivotIndex - 1);
+            quickSort(arreglo, pivotIndex + 1, high);
+        }
     }
 }
+
+
+
+
 

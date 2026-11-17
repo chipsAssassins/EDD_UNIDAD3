@@ -135,6 +135,10 @@ public static void insertionSort(int[] arreglo) {
             quickSort(arreglo, pivotIndex + 1, high);
         }
     }
+
+    public static void mergeSort(int[] arreglo, int low, int high) {
+    }
+    
 }
 
 
